@@ -35,6 +35,7 @@ public class Sample01 {
 		
 		System.out.println(i5);
 		System.out.println(i6);
+		
 	}
 
 }
