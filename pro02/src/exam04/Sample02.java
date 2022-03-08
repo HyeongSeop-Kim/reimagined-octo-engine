@@ -36,6 +36,18 @@ public class Sample02 {
 		num3 = sc.nextInt();
 		System.out.print("값을 입력하세요 : ");
 		num4 = sc.nextInt();
-		System.out.printf("%d == %d -> %b", num3, num4, num3==num4);
+		System.out.printf("%d == %d -> %b \n", num3, num4, num3==num4);
+		
+		// 논리 연산자
+		// &&, ||
+		System.out.printf("%b && %b -> %b \n", true, true, true && true);
+		System.out.printf("%b && %b -> %b \n", true, false, true && false);
+		System.out.printf("%b && %b -> %b \n", false, true, false && true);
+		System.out.printf("%b && %b -> %b \n", false, false, false && false);
+		
+		System.out.printf("%b || %b -> %b \n", true, true, true || true);
+		System.out.printf("%b || %b -> %b \n", true, false, true || false);
+		System.out.printf("%b || %b -> %b \n", false, true, false || true);
+		System.out.printf("%b || %b -> %b \n", false, false, false || false);
 	}
 }
