@@ -104,7 +104,7 @@ public class StudentList {
 	}
 	
 	// 이름으로 해당 학생이 저장된 인덱스 번호를 찾는 메서드
-	public int _findIndex(String name) {
+	private int _findIndex(String name) {
 		int idx = -1;
 		
 		for(int i = 0; i < length(); i++) {
@@ -114,5 +114,17 @@ public class StudentList {
 		}
 		
 		return idx;
+	}
+	
+	public String getName(int idx) {
+		return this.sList[idx].getName();
+	}
+	
+	public int getGrade(int idx) {
+		return this.sList[idx].getGrade();
+	}
+	
+	public int getGroup(int idx) {
+		return this.sList[idx].getGroup();
 	}
 }

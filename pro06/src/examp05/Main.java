@@ -53,26 +53,56 @@ public class Main {
 			int menu = sc.nextInt();
 			sc.nextLine();
 			
+			String stuName = new String();
+			int stuAge, stuGrade, stuGroup;
+			
 			switch(menu) {
 				case 1:
-					System.out.println("조회 기능 수행");
-					break;
+					for(int i = 0; i < sList.length(); i++) {
+						System.out.printf("%s %d학년 %d반\n", sList.getName(i), sList.getGrade(i), sList.getGroup(i));
+					}
+					continue;
 				case 2:
-					System.out.println("추가 기능 수행");
-					break;
+					System.out.printf("추가할 학생의 이름을 입력하세요 : ");
+					stuName = sc.nextLine();
+					System.out.printf("추가할 학생의 나이를 입력하세요 : ");
+					stuAge = sc.nextInt();
+					System.out.printf("추가할 학생의 학년을 입력하세요 : ");
+					stuGrade = sc.nextInt();
+					System.out.printf("추가할 학생의 반을 입력하세요 : ");
+					stuGroup = sc.nextInt();
+					
+					sList.add(stuName, stuAge, stuGrade, stuGroup);
+					
+					System.out.println("추가되었습니다.");
+					continue;
 				case 3:
-					System.out.println("수정 기능 수행");
-					break;
+					System.out.println("수정할 학생의 이름을 입력하세요 : ");
+					stuName = sc.nextLine();
+					System.out.printf("수정할 학년을 입력하세요 : ");
+					stuGrade = sc.nextInt();
+					System.out.printf("수정할 반을 입력하세요 : ");
+					stuGroup = sc.nextInt();
+					
+					sList.update(stuName, stuGrade, stuGroup);
+					
+					System.out.println("수정되었습니다.");
+					continue;
 				case 4:
-					System.out.println("삭제 기능 수행");
-					break;
+					System.out.println("삭제할 학생의 이름을 입력하세요 : ");
+					stuName = sc.nextLine();
+					
+					sList.remove(stuName);
+					
+					System.out.println("삭제되었습니다.");
+					continue;
 				case 9:
 					System.out.println("프로그램 종료");
 					break;
 				default:
 					System.out.println("메뉴 번호를 잘못 입력하셨습니다.");
 			}
-			
+			break;
 		}
 	}
 
