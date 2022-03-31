@@ -1,6 +1,6 @@
 package exam07;
 
-public class SectionChief extends DeputySectionChief {
+public class SectionChief extends DeputySectionChief implements TeamManager{
 	public boolean teamLeader = false;
 	
 	public SectionChief(String name, String position) {
@@ -19,7 +19,7 @@ public class SectionChief extends DeputySectionChief {
 	public double salary() {
 		double salary, bonus;
 		if(teamLeader) {
-			salary = this.annualIncom * 1.1 / 12;
+			salary = teamPayBonus();
 			bonus = _bonus(this.getPosition());
 			month++;
 		} else {
@@ -28,5 +28,11 @@ public class SectionChief extends DeputySectionChief {
 			month++;
 		}		
 		return salary + bonus;
+	}
+	
+	@Override
+	public double teamPayBonus() {
+		double salary = this.annualIncom * 1.2 / 12;	
+		return salary;
 	}
 }
