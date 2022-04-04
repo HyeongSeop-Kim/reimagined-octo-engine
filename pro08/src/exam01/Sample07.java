@@ -172,6 +172,27 @@ public class Sample07 {
 		System.out.println(sFormat.format(upload.getTime()));
 	}
 	
+	public void ex09() { 
+		SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
+		GregorianCalendar upload = new GregorianCalendar(2022, 5 - 1, 20);
+		Date now = new Date();
+		
+		System.out.println("입력한 날짜 : " + sFormat.format(upload.getTime()));
+		System.out.println("현재시간 날짜 : " + sFormat.format(now));
+		
+		int dDayTime = (int)((now.getTime() - upload.getTime().getTime()) / 1000);
+		
+		if(dDayTime < 0) {
+			System.out.println("D-Day 까지 " + -dDayTime / (60 * 60 * 24) + "일 남음");
+		} else if(dDayTime > 0) {
+			System.out.println("D-Day 부터 " + dDayTime / (60 * 60 * 24) + "일 지남");
+		} else {
+			System.out.println("D-Day");
+		}
+		
+		System.out.println(sFormat.format(upload.getTime()));
+	}
+	
 	public static void main(String[] args) {
 		Sample07 sample = new Sample07();
 		
@@ -182,7 +203,8 @@ public class Sample07 {
 //		sample.ex05();
 //		sample.ex06();
 //		sample.ex07();
-		sample.ex08();
+//		sample.ex08();
+		sample.ex09();
 		
 		
 		
