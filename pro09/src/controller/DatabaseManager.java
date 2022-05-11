@@ -2,8 +2,10 @@ package controller;
 
 import java.util.Arrays;
 
+import exception.GradeScoreException;
 import model.vo.Grade;
 import model.vo.Student;
+
 
 public class DatabaseManager implements ImplDatabaseManager {
 
@@ -89,8 +91,35 @@ public class DatabaseManager implements ImplDatabaseManager {
 		return index;
 	}
 	
+	public boolean isExisted(String name) {
+		boolean result = false;
+		if(_findIndex(name) != -1) {
+			result = true;
+		}
+		return result;
+	}
+	
 	public int length() {
 		return this.datas.length;
+	}
+
+	@Override
+	public Student getStudent(String name) {
+		int index = _findIndex(name);
+		if(index != -1) {
+			return datas[index];
+		}
+		return null;
+	}
+	
+	@Override
+	public Student login(String username, String password) {
+		for(int i = 0; i < datas.length; i++) {
+			if(username.equals(datas[i].getName()) && password.equals(datas[i].getPassword())) {
+				return datas[i];
+			}
+		}
+		return null;
 	}
 
 }

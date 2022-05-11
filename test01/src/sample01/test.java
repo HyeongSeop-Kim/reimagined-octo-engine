@@ -1,25 +1,25 @@
 package sample01;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class test {
-
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		while(true) {
-			System.out.print("문자열을 입력해주세요 : ");
-			String str = sc.nextLine();
-			System.out.println(str.toString());
-			if(str.equals("exit")) {
-				break;
-			} else {
-				System.out.println(str.length() + "글자 입니다.");
-			}
-		}
-		System.out.println("프로그램을 종료합니다.");
 	
-
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter("test.txt");
+			fw.write(97);
+			fw.write(66);
+			fw.close();
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

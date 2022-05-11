@@ -8,5 +8,6 @@ public interface ImplDatabaseManager {
 	public boolean add(String name);
 	public Student modify(String name, String subject, int score);
 	public boolean remove(String name);
-	
+	public Student getStudent(String name);
+	public Student login(String username, String password);
 }

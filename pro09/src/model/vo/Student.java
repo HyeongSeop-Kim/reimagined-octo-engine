@@ -1,25 +1,33 @@
 package model.vo;
 
-public class Student {
-	private String name;
+import java.util.Random;
+
+public class Student extends Account{
 	private Grade[] grades;
+
 	
 	public Student(String name) {
-		this.name = name;
+		super(name);
 	}
 	
-	public String getName() {
-		return name;
+	public Student(String name, String password) {
+		super(name, password);
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	public Grade[] getGrades() {
 		return grades;
 	}
 	public void setGrades(Grade[] grades) {
 		this.grades = grades;
+	}	
+	public String resetPassword() {
+		Random r = new Random();
+		String prefix = "STD_";
+		String newPass = "";
+		for(int i = 0; i < 6; i++) {
+			newPass += (char)(r.nextInt(52) + 65);
+		}
+		setPassword(prefix + newPass);
+		return prefix + newPass;
 	}
-	
-	
 }
