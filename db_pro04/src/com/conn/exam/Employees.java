@@ -2,6 +2,7 @@ package com.conn.exam;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import com.conn.db.DBconn;
@@ -24,9 +25,12 @@ public class Employees {
 		 * salary 에 해당하는 데이터를 조회하여 출력해보기
 		 * 출력에 사용할 컬럼은 EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALRARY 로 한다.
 		 */
-		String query = "SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY FROM EMPLOYEES WHERE SALARY = " + salary;
+		String query = "SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY FROM EMPLOYEES WHERE SALARY = ?";
 		try {
-			ResultSet rs = db.sendSelectQuery(query);
+			PreparedStatement pstat = db.getPstat(query);
+			pstat.setInt(1, salary);
+			
+			ResultSet rs = db.sendSelectQuery();
 			while(rs.next()) {
 				System.out.println("EMPLOYEE_ID : " + rs.getInt("EMPLOYEE_ID"));
 				System.out.println(" FIRST_NAME : " + rs.getString("FIRST_NAME"));
