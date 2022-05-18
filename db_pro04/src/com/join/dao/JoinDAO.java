@@ -100,7 +100,7 @@ public class JoinDAO {
 	
 	public JoinVO get(String userID) {
 		// 단일 데이터 조회		
-		String query = String.format("SELECT * FROM ACCOUNTS WHERE USERID = ?");
+		String query = "SELECT * FROM ACCOUNTS WHERE USERID = ?";
 		
 		try {
 			PreparedStatement pstat = db.getPstat(query);
