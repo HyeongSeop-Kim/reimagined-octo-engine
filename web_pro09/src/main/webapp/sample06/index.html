@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>자바스크립트 - 이벤트</title>
+	<link rel="stylesheet" type="text/css" href="../static/css/sample06.css">
+	<script type="text/javascript" src="../static/js/sample06.js"></script>
+	<script type="text/javascript" src="../static/js/jquery-3.6.0.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+	<h1>Event</h1>
+	<h2>이벤트 등록 방법</h2>
+	<h3>인라인 이벤트 등록</h3>
+	<div id="id1" onclick="f1()">
+		여기를 클릭하세요.
+	</div>
+	<div onclick="f2(this)">
+		여기를 클릭하세요.
+	</div>
+	<hr>
+	<h3>고전 방식(이벤트 속성에 함수 연결) 이벤트 등록</h3>
+	<div id="id2">여기를 클릭하세요.</div>
+	<script type="text/javascript">
+		var id2 = document.getElementById("id2");
+		id2.onclick = function() {
+			this.innerText += "클릭 이벤트 동작111";
+		};
+		id2.onclick = function() {
+			this.innerText += "클릭 이벤트 동작222"
+		}
+	</script>
+	<hr>
+	<h3>표준 방식(addEventListener 함수로 등록) 이벤트 등록</h3>
+	<div id="id3">여기를 클릭하세요.</div>
+	<script type="text/javascript">
+		var id3 = document.getElementById("id3");
+		id3.addEventListener("click", function() {
+			this.innerText += "클릭이베트 동작111";
+		});
+		id3.addEventListener("click", function() {
+			this.innerText += "클릭이베트 동작222";
+		});
+	</script>
+	<hr>
+	<h2>이벤트 종류</h2>
+	<table>
+		<tbody>
+			<tr>
+				<td>load</td>
+				<td>웹 페이지 정보(css, javascript, image 등)가 로드가 완료된 시점에 발생</td>
+				<td>
+					<script type="text/javascript">
+						window.addEventListener("load", function(e) {
+							document.getElementById("res1").innerText = "로드 완료!";
+						});
+					</script>
+					<div id="res1"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>focus/blur</td>
+				<td>엘리먼트에 포커스가 잡혔을 때(focus) / 엘리먼트에 잡힌 포커스가 풀렸을 때(blur)</td>
+				<td>
+					<input id="id4" type="text">
+					<input id="id5" type="text">
+					<script type="text/javascript">
+						var id4 = document.getElementById("id4");
+						var id5 = document.getElementById("id5");
+						
+						id4.addEventListener("focus", function(e) {
+							this.value = "포커스가 잡혔습니다.";
+						});
+						
+						id5.addEventListener("focus", function(e) {
+							this.value = "포커스가 잡혔습니다.";
+						});
+						
+						id4.addEventListener("blur", function(e) {
+							this.value = "포커스가 풀렸습니다.";
+						});
+						
+						id5.addEventListener("blur", function(e) {
+							this.value = "포커스가 풀렸습니다.";
+						});
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td>resize</td>
+				<td>브라우저 창의 크기가 변경 될 때</td>
+				<td>
+					<label id="id6"></label>
+					<script type="text/javascript">
+						var id6 = document.getElementById("id6");
+						
+						window.addEventListener("resize", function(e) {
+							console.log(e);
+							id6.innerText = `x:${this.innerWidth}. y:${this.innerHeight}`;
+						});
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td>scroll</td>
+				<td>스크롤 동작을 했을 때</td>
+				<td>
+					<label id="id7"></label>
+					<textarea id="id8">스크롤을 생기게 만들기 위한 문자열!</textarea>
+					<script type="text/javascript">
+						var id7 = document.getElementById("id7");
+						var id8 = document.getElementById("id8");
+						
+						window.addEventListener("scroll", function(e) {
+							id7.innerText = `x:${this.scrollX}. y:${this.scrollY}`;
+						});
+						id8.addEventListener("scroll", function(e) {
+							id7.innerText = `엘리먼트 스크롤 -> x:${parseInt(this.scrollLeft)}. y:${parseInt(this.scrollUp)}`;
+						})
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td>cut</td>
+				<td>선택된 텍스트 영역에 대한 잘라내기 기능이 발생할 때(Ctrl + X)</td>
+				<td>
+					<input id="id9" type="text" value="잘라내기 테스트용 텍스트"><br>
+					<label id="id10">잘라내기 동작 확인</label>
+					<script type="text/javascript">
+						var id9 = document.getElementById("id9");
+						var id10 = document.getElementById("id10");
+						
+						id9.addEventListener("cut", function(e) {
+							id10.innerText = "잘라내기 작업은 금지되었습니다.";
+							e.preventDefault();
+						});
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td>copy</td>
+				<td>선택된 텍스트 영역에 대한 잘라내기 기능이 발생할 때(Ctrl + C)</td>
+				<td>
+					<input id="id11" type="text" value="복사 테스트용 텍스트"><br>
+					<label id="id12">복사 동작 확인</label>
+					<script type="text/javascript">
+						var id11 = document.getElementById("id11");
+						var id12 = document.getElementById("id12");
+						
+						id11.addEventListener("copy", function(e) {
+							id12.innerText = "복사 작업을 하였습니다.";
+						});
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td>paste</td>
+				<td>선택된 텍스트 영역에 대한 잘라내기 기능이 발생할 때(Ctrl + V)</td>
+				<td>
+					<input id="id13" type="text"><br>
+					<label id="id14">붙여넣기 동작 확인</label>
+					<script type="text/javascript">
+						var id13 = document.getElementById("id13");
+						var id14 = document.getElementById("id14");
+						
+						id13.addEventListener("paste", function(e) {
+							id14.innerText = "붙여넣기 작업을 하였습니다.";
+						});
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td>keydown</td>
+				<td>키보드의 키가 눌렸을 때</td>
+				<td>
+					<input id="id15" type="text"><br>
+					<label id="id16">키 확인</label>
+					<script type="text/javascript">
+						var id15 = document.getElementById("id15");
+						var id16 = document.getElementById("id16");
+						
+						id15.addEventListener("keydown", function(e) {
+							id16.innerText = `${e.key}, ${e.keyCode}`;
+						});
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td>keyup</td>
+				<td>키보드의 키를 눌렀다가 땠을 때</td>
+				<td>
+					<input id="id17" type="text"><br>
+					<label id="id18">키 확인</label>
+					<script type="text/javascript">
+						var id17 = document.getElementById("id17");
+						var id18 = document.getElementById("id18");
+						
+						id17.addEventListener("keyup", function(e) {
+							id18.innerText = `${e.key}, ${e.keyCode}`;
+						});
+					</script>
+				</td>
+			</tr>
+			<tr>
+				<td>mouseenter/mouseleave</td>
+				<td>마우스가 등록된 엘리먼트 위로 이동했을 때</td>
+				<td>
+					<div id="id19">
+						<div class="box-red"></div>
+						<laber id="id20">마우스 엔터 확인 - 0</laber>
+						<script type="text/javascript">
+							var id19 = document.getElementById("id19");
+							var id20 = document.getElementById("id20");
+							
+							id19.addEventListener("mouseenter", function(e) {
+								let num = new Number(id20.innerText.split(" - ")[1]);
+								num += 1;
+								id20.innerText = id20.innerText.split(" - ")[0] + " - " + num;
+							});
+						</script>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>mouseover/mouseout</td>
+				<td>마우스가 등록된 엘리먼트 위로 이동했을 때(자식 엘리먼트도 포함)</td>
+				<td>
+					<div id="id21">
+						<div class="box-red"></div>
+						<laber id="id22">마우스 오버 확인 - 0</laber>
+						<script type="text/javascript">
+							var id21 = document.getElementById("id21");
+							var id22 = document.getElementById("id22");
+							
+							id21.addEventListener("mouseover", function(e) {
+								let num = new Number(id22.innerText.split(" - ")[1]);
+								num += 1;
+								id22.innerText = id22.innerText.split(" - ")[0] + " - " + num;
+							});
+						</script>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div id="res1"></div>
+</body>
+</html>

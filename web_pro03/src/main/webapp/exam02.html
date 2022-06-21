@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<h1>Date and time formats used in HTML</h1>
+		<p>Certain HTML elements use date and/or time values. The Formats of the strings that specify
+		   these values are described in this article.</p>
+		<p>Elements that such formats include certain forms of the 
+		<a href="#"><mark>&lt;input&gt;</mark></a> element that let the user choose or specify a date,
+		time, or both, as well as the <a href="#"><mark>&lt;ins&gt;</mark></a> and 
+		<a href="#"><mark>&lt;del&gt;</mark></a> elements, whose <a href="#"><mark>datetime</mark></a>
+		attribute specifies the date or date and time at which the insertion or deletion of content occurred.
+		</p>
+		<p>For <mark>&lt;input&gt;</mark>, the values of <a href="#"><mark>type</mark></a> that rturn a
+		<a href="#"><mark>value</mark></a> which contains a string representing a date and/or time are:
+		</p>
+	
+		<ul>
+			<li><a href="#"><mark>date</mark></a></li>
+			<li><a href="#"><mark>datetime-local</mark></a></li>
+			<li><a href="#"><mark>month</mark></a></li>
+			<li><a href="#"><mark>time</mark></a></li>
+			<li><a href="#"><mark>week</mark></a></li>
+		</ul>
+		
+		<h2>Examples</h2>
+		<p>Before getting into intricacies of how date and time strings are written and parsed in HTML,
+		here are some examples that should give you a good idea what the more commonly-used date and time
+		string formats look like.</p>
+		
+		<figure>
+			<figcaption>Example HTML date and time strings</figcaption>
+			<table border="1">
+				<tr>
+					<th>String</th>
+					<th colspan="2">Date and/or time</th>
+				</tr>
+				<tr>
+					<td>2005-06-07</td>
+					<td>June 7, 2005</td>
+					<td>[details]</td>
+				</tr>
+				<tr>
+					<td><mark>08:45</mark></td>
+					<td>08:45 AM</td>
+					<td>[details]</td>
+				</tr>
+				<tr>
+					<td>08:45:25</td>
+					<td>8:45 AM and 25 seconds</td>
+					<td>[details]</td>
+				</tr>
+				<tr>
+					<td><mark>0033-08-04T03:40</mark></td>
+					<td>3:40 AM on August 4, 33</td>
+					<td>[details]</td>
+				</tr>
+				<tr>
+					<td>1977-04-01T14:00:30</td>
+					<td>30 seconds after 2:00 PM on April 1, 1977</td>
+					<td>[details]</td>
+				</tr>
+				<tr>
+					<td><mark>1977-01-01T00:00Z</mark></td>
+					<td>Midnight UTC on January 1, 1901</td>
+					<td>[details]</td>
+				</tr>
+				<tr>
+					<td>1901-01-01T00:00:01-04:00</td>
+					<td>1 second past midnight Eastern Standard Time (EST) on January 1, 1901</td>
+					<td>[details]</td>
+				</tr>
+			</table>
+		</figure>
+		
+	</body>
+</html>

@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+* {
+	margin: 0; padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: rgb(245, 246, 247);
+}
+
+header{
+	margin: 2rem auto;
+}
+
+.logo-title {
+	font-family: "HY견고딕";
+	color: rgb(0, 200, 80);
+	text-align: center;
+	font-size: 4rem;
+	font-weight: bold;
+}
+
+.container {
+	width: 480px;
+	margin: 0 auto;
+}
+
+.join-form-group {
+	margin-bottom: 1.6rem;
+}
+
+.join-form-div {
+	margin-bottom: 0.8rem;
+}
+
+.join-form-label {
+	width: 100%;
+	display: block;
+	font-weight: bold;
+	margin-bottom: 0.4rem;
+}
+
+.join-form-input {
+	width: 100%;
+	display: block;
+	padding: 1rem;
+	border: 2px solid rgb(218, 218, 218);
+	outline-style: none;
+}
+
+.form-inline-input {
+	display: flex;
+	width: 100%;
+/*	flex-wrap: nowrap;*/
+	gap: 0.4rem;
+}
+
+.form-inline-input > .inline-input {
+	border: 2px solid rgb(218, 218, 218);
+	outline-style: none;
+	padding: 1rem;
+	flex-grow: 1;
+	width:33%;
+}
+
+.mute {
+	font-size: 0.8rem;
+	color : rgb(168, 168, 168);
+}

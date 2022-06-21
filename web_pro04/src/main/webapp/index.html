@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>사용자 입력 폼 2</title>
+</head>
+<body>
+	<form action="./run.jsp" method="GET">
+		<input type="text" name="v1" value="init_value"><br>
+		<input type="password" name="v2" placeholder="패스워드입력" required><br>
+		<input type="hidden" name="v3" value="value3"><br>
+		<input type="text" name="v4" value="readonly data" readonly><br>
+		<input type="text" name="v5" value="disabled data" disabled><br>
+		<hr>
+		<input type="text" name="v6" minlength="4" maxlength="12" size="24"><br>
+		<hr>
+		<input type="number" name="v7" min="1" max="100" step="2"><br>
+		<input type="number" name="v8" min="1" max="100" step=".5"><br>
+		<input type="range" name="v9" min="0" max="100" stemp="10" oninput="out1.value = this.value">
+		<input id="out1" type="text" size="3" readonly><br>
+		<hr>
+		<input type="date" name="v10" value="2022-05-23"><br>
+		<input type="time" name="v11" value="17:39"><br>
+		<input type="month" name="v12" value="2022-05"><br>
+		<input type="datetime-local" name="v13" value="2022-05-23T17:39"><br>
+		<hr>
+		<input type="search" name="v14"><br>
+		<input type="url" name="v15"><br>
+		<input type="email" name="v16"><br>
+		<input type="tel" name="v17"><br>
+		<br>
+		<input type="button" value="버튼"><input type="submit" value="전송"><input type="reset" value="초기화"><br>
+		<button type="button">버튼</button><button type="submit">전송</button><button type="reset">초기화</button>
+		<button type="submit">전송</button>
+	</form>
+</body>
+</html>

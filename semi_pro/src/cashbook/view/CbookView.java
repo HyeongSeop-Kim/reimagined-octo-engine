@@ -6,13 +6,14 @@ import java.util.Date;
 import java.util.Scanner;
 
 import cashbook.controller.CbookController;
+import cashbook.dao.CbookDAO;
 import cashbook.vo.CbookVO;
 
 public class CbookView {
 
 	Scanner sc = new Scanner(System.in);
 	CbookController cc = new CbookController();
-	CbookVO cvo = new CbookVO();
+	CbookDAO cDAO = new CbookDAO();
 	SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public void mainMenu() {
@@ -101,6 +102,8 @@ public class CbookView {
 	}
 	
 	public void addDeposit() {
+		CbookVO cvo = new CbookVO();
+		
 		String input;
 		System.out.println("아래 형식에 맞추어 날짜를 입력하세요.");
 		System.out.println("미작성시 오늘 날짜로 기록됩니다.");
@@ -144,6 +147,8 @@ public class CbookView {
 	}
 	
 	public void addExpense() {
+		CbookVO cvo = new CbookVO();
+		
 		String input;
 		System.out.println("아래 형식에 맞추어 날짜를 입력하세요.");
 		System.out.println("미작성시 오늘 날짜로 기록됩니다.");
@@ -218,11 +223,13 @@ public class CbookView {
 	}
 	
 	public void modifyData() {
+		CbookVO cvo = new CbookVO();
+		
 		String input;
 		System.out.print("수정할 데이터의 고유번호를 입력해주세요 : ");
 		input = sc.nextLine();
 		int serialNum = Integer.parseInt(input);
-		CbookVO currentData = cc.findData(serialNum);
+		CbookVO currentData = cDAO.findData(serialNum);
 		cvo.setSerialNum(serialNum);
 		
 		System.out.println("수정할 데이터를 입력해주세요. 미작성시 현재 데이터가 유지됩니다.");
@@ -232,7 +239,7 @@ public class CbookView {
 		input = sc.nextLine();
 		java.sql.Date inputDate;
 		if(input.equals("")) {
-			cvo.setTransactionDate(currentData.getTransactionDate());
+			cvo.setTransactionDate(currentData.getTransactionDate(0));
 		} else {			
 			try {
 				inputDate = new java.sql.Date(sFormat.parse(input).getTime());
@@ -245,28 +252,28 @@ public class CbookView {
 		System.out.print("현장명 : ");
 		input = sc.nextLine();
 		if(input.equals("")) {
-			cvo.setSiteName(currentData.getSiteName());
+			cvo.setSiteName(currentData.getSiteName(0));
 		} else {
 			cvo.setSiteName(input);
 		}
 		System.out.print("적요 : ");
 		input = sc.nextLine();
 		if(input.equals("")) {
-			cvo.setBreakdown(currentData.getBreakdown());
+			cvo.setBreakdown(currentData.getBreakdown(0));
 		} else {
 			cvo.setBreakdown(input);
 		}
 		System.out.print("입금액 : ");
 		input = sc.nextLine();
 		if(input.equals("")) {
-			cvo.setDeposit(currentData.getDeposit());
+			cvo.setDeposit(currentData.getDeposit(0));
 		} else {
 			cvo.setDeposit(Integer.parseInt(input));
 		}
 		System.out.print("지출액 : ");
 		input = sc.nextLine();
 		if(input.equals("")) {
-			cvo.setExpense(currentData.getExpense());
+			cvo.setExpense(currentData.getExpense(0));
 		} else {
 			cvo.setExpense(Integer.parseInt(input));
 		}
@@ -274,7 +281,7 @@ public class CbookView {
 		System.out.print("비고 번호 : ");
 		input = sc.nextLine();
 		if(input.equals("")) {
-			cvo.setNoteNum(currentData.getNoteNum());
+			cvo.setNoteNum(currentData.getNoteNum(0));
 		} else {
 			cvo.setNoteNum(Integer.parseInt(input));
 		}
@@ -288,12 +295,14 @@ public class CbookView {
 	}
 	
 	public void removeDate() {
+		CbookVO cvo = new CbookVO();
+		
 		String input;
 		System.out.print("삭제할 데이터의 고유번호를 입력해주세요 : ");
 		input = sc.nextLine();
 		cvo.setSerialNum(Integer.parseInt(input));
 		
-		boolean result = cc.remove(cvo.getSerialNum());
+		boolean result = cc.remove(cvo.getSerialNum(0));
 		if(result) {
 			System.out.println("삭제되었습니다.");
 		} else {

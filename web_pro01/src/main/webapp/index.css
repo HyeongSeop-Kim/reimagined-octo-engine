@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+#notice-form {
+	margin-bottom: 20px;
+}
+
+.notice-input {
+	display: block;
+	margin-bottom: 5px;
+}
+
+#notice-title, #notice-content{
+	width: 20rem;
+}
+
+#notice-content{
+	height: 15rem;
+	vertical-align: top;
+	line-height: 15rem;
+}
+
+#notice-form span  {
+	font-weight: bold;
+	display: inline-block;
+	margin: 0px 20px 0px 10px;
+}
+
+
+.bg-coral {
+	background-color:coral;
+}
+
+.font-white {
+	color: white;
+}
+
+.bg-beige {
+	background-color: beige;
+}
+
+#notice-btn {
+	margin: 20px 0 0 10rem;
+}

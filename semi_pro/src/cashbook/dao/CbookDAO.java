@@ -20,7 +20,7 @@ public class CbookDAO {
 		}
 	}
 	
-	public ResultSet inquiry(Date startDate, Date endDate) {
+	public CbookVO inquiry(Date startDate, Date endDate) {
 		String query = "SELECT TRANSACTION_DATE"
 				+ ", SERIAL_NUM"
 				+ ", SITE_NAME"
@@ -44,7 +44,19 @@ public class CbookDAO {
 			pstat.setDate(1, sDate);
 			pstat.setDate(2, eDate);
 			ResultSet rs = db.sendSelectQuery();
-			return rs;
+			CbookVO data = new CbookVO();
+			
+			while(rs.next()) {				
+				data.setSerialNum(rs.getInt("SERIAL_NUM"));
+				data.setTransactionDate(rs.getDate("TRANSACTION_DATE"));
+				data.setSiteName(rs.getString("SITE_NAME"));
+				data.setBreakdown(rs.getString("BREAKDOWN"));
+				data.setDeposit(rs.getInt("DEPOSIT"));
+				data.setExpense(rs.getInt("EXPENSE"));
+				data.setNoteName(rs.getString("NOTE_NAME"));
+			}
+			
+			return data;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -54,7 +66,7 @@ public class CbookDAO {
 		return null;
 	}
 	
-	public ResultSet inquiry() {
+	public CbookVO inquiry() {
 		String query = "SELECT TRANSACTION_DATE"
 				+ ", SERIAL_NUM"
 				+ ", SITE_NAME"
@@ -69,7 +81,18 @@ public class CbookDAO {
 		try {
 			PreparedStatement pstat = db.getPstat(query);
 			ResultSet rs = db.sendSelectQuery();
-			return rs;
+			CbookVO data = new CbookVO();
+			
+			while(rs.next()) {				
+				data.setSerialNum(rs.getInt("SERIAL_NUM"));
+				data.setTransactionDate(rs.getDate("TRANSACTION_DATE"));
+				data.setSiteName(rs.getString("SITE_NAME"));
+				data.setBreakdown(rs.getString("BREAKDOWN"));
+				data.setDeposit(rs.getInt("DEPOSIT"));
+				data.setExpense(rs.getInt("EXPENSE"));
+				data.setNoteName(rs.getString("NOTE_NAME"));
+			}
+			return data;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -79,12 +102,18 @@ public class CbookDAO {
 		return null;
 	}
 	
-	public ResultSet getNoteList() {
+	public CbookVO getNoteList() {
 		String query = "SELECT * FROM NOTE";
 		try {
 			PreparedStatement pstat = db.getPstat(query);
 			ResultSet rs = db.sendSelectQuery();
-			return rs;
+			CbookVO data = new CbookVO();
+			
+			while(rs.next()) {
+				data.setNoteNum(rs.getInt("NOTE_NUM"));
+				data.setNoteName(rs.getString("NOTE_NAME"));
+			}
+			return data;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -97,12 +126,12 @@ public class CbookDAO {
 		String query = "INSERT INTO CASHBOOK VALUES (SQU_SNUM.NEXTVAL, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstat = db.getPstat(query);
-			pstat.setDate(1, cVO.getTransactionDate());
-			pstat.setString(2, cVO.getSiteName());
-			pstat.setString(3, cVO.getBreakdown());
-			pstat.setInt(4, cVO.getDeposit());
+			pstat.setDate(1, cVO.getTransactionDate(0));
+			pstat.setString(2, cVO.getSiteName(0));
+			pstat.setString(3, cVO.getBreakdown(0));
+			pstat.setInt(4, cVO.getDeposit(0));
 			pstat.setInt(5, 0);
-			pstat.setInt(6, cVO.getNoteNum());
+			pstat.setInt(6, cVO.getNoteNum(0));
 			int rs = db.sendInsertQuery();
 			if(rs == 1) {
 				return true;				
@@ -119,12 +148,12 @@ public class CbookDAO {
 		String query = "INSERT INTO CASHBOOK VALUES (SQU_SNUM.NEXTVAL, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstat = db.getPstat(query);
-			pstat.setDate(1, cVO.getTransactionDate());
-			pstat.setString(2, cVO.getSiteName());
-			pstat.setString(3, cVO.getBreakdown());
+			pstat.setDate(1, cVO.getTransactionDate(0));
+			pstat.setString(2, cVO.getSiteName(0));
+			pstat.setString(3, cVO.getBreakdown(0));
 			pstat.setInt(4, 0);
-			pstat.setInt(5, cVO.getExpense());
-			pstat.setInt(6, cVO.getNoteNum());
+			pstat.setInt(5, cVO.getExpense(0));
+			pstat.setInt(6, cVO.getNoteNum(0));
 			int rs = db.sendInsertQuery();
 			if(rs == 1) {
 				return true;				
@@ -147,13 +176,13 @@ public class CbookDAO {
 					 + " WHERE SERIAL_NUM = ?";
 		try {
 			PreparedStatement pstat = db.getPstat(query);
-			pstat.setDate(1, cVO.getTransactionDate());
-			pstat.setString(2, cVO.getSiteName());
-			pstat.setString(3, cVO.getBreakdown());
-			pstat.setInt(4, cVO.getDeposit());
-			pstat.setInt(5, cVO.getExpense());
-			pstat.setInt(6, cVO.getNoteNum());
-			pstat.setInt(7, cVO.getSerialNum());
+			pstat.setDate(1, cVO.getTransactionDate(0));
+			pstat.setString(2, cVO.getSiteName(0));
+			pstat.setString(3, cVO.getBreakdown(0));
+			pstat.setInt(4, cVO.getDeposit(0));
+			pstat.setInt(5, cVO.getExpense(0));
+			pstat.setInt(6, cVO.getNoteNum(0));
+			pstat.setInt(7, cVO.getSerialNum(0));
 			int rs = db.sendUpdateQuery();
 			if(rs == 1) {
 				return true;				
@@ -183,13 +212,23 @@ public class CbookDAO {
 		return false;
 	}
 	
-	public ResultSet findData(int serialNum) {
+	public CbookVO findData(int serialNum) {
 		String query = "SELECT * FROM CASHBOOK WHERE SERIAL_NUM=?";
 		try {
 			PreparedStatement pstat = db.getPstat(query);
 			pstat.setInt(1, serialNum);
 			ResultSet rs = db.sendSelectQuery();
-			return rs;
+			CbookVO data = new CbookVO();
+			while(rs.next()) {				
+				data.setSerialNum(rs.getInt("SERIAL_NUM"));
+				data.setTransactionDate(rs.getDate("TRANSACTION_DATE"));
+				data.setSiteName(rs.getString("SITE_NAME"));
+				data.setBreakdown(rs.getString("BREAKDOWN"));
+				data.setDeposit(rs.getInt("DEPOSIT"));
+				data.setExpense(rs.getInt("EXPENSE"));
+				data.setNoteNum(rs.getInt("NOTE_NUM"));
+			}
+			return data;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
