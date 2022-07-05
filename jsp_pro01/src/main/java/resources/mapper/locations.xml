@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="locsMapper">
+	<select id="locsSelectAll" resultType="locsDto">
+		SELECT LOCATION_ID AS locationId
+			 , STREET_ADDRESS AS streetAddress
+			 , POSTAL_CODE AS postalCode
+			 , CITY
+			 , STATE_PROVINCE AS stateProvince
+			 , COUNTRY_ID AS countryId
+		  FROM LOCATIONS
+	</select>
+	<select id="locsSelectId" resultType="locsDto">
+		SELECT LOCATION_ID AS locationId
+			 , STREET_ADDRESS AS streetAddress
+			 , POSTAL_CODE AS postalCode
+			 , CITY
+			 , STATE_PROVINCE AS stateProvince
+			 , COUNTRY_ID AS countryId
+		  FROM LOCATIONS
+		 WHERE LOCATION_ID = #{id}
+	</select>
+</mapper>
+
