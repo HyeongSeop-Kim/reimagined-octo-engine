@@ -1,4 +1,4 @@
-package dept.controller;
+package emps.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,29 +6,29 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dept.model.DeptDTO;
-import dept.service.DeptService;
+import emps.model.EmpsDTO;
+import emps.service.EmpsService;
 
-@WebServlet("/depts")
-public class DeptController extends HttpServlet {
+
+@WebServlet("/emps")
+public class EmpsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private DeptService service = new DeptService();
+	private EmpsService service = new EmpsService();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-
 		String search = request.getParameter("search");
 		String page = request.getParameter("page");
-		String sort = "deptId";
+		String sort = "empId";
 		int count = 5;
 		
+		
+		HttpSession session = request.getSession();
 		if(session.getAttribute("pgc") != null) {
 			count = Integer.parseInt(session.getAttribute("pgc").toString());
 		}
@@ -46,7 +46,7 @@ public class DeptController extends HttpServlet {
 		session.setAttribute("pgc", count);
 		session.setAttribute("sort", sort);
 		request.setAttribute("pgc", count);
-		request.setAttribute("menuLocation", "depts");
+		request.setAttribute("menuLocation", "emps");
 		
 		/*
 		Cookie cookies[] = request.getCookies();
@@ -69,27 +69,27 @@ public class DeptController extends HttpServlet {
 
 		response.addCookie(cookie);
 		*/
-		List<DeptDTO> datas = null;
-		if(search == null) {
-			int pageNum = 1;
-			if(page != null) {
-				if(!page.isEmpty() && page.matches("\\d+")) {
-					pageNum = Integer.parseInt(page);
-				}
-			}
-			datas = service.getPage(pageNum, count, sort);
-			request.setAttribute("page", pageNum);
-			request.setAttribute("pageList", service.getPageNumberList(count));
-		} else {
-			DeptDTO data = service.getDeptId(search);
-			if(data != null) {
-				datas = new ArrayList<DeptDTO>();
-				datas.add(data);
-			}
-		}
-		request.setAttribute("datas", datas);
-		
-		String view = "/WEB-INF/jsp/dept/index.jsp";
+//		List<EmpsDTO> datas = null;
+//		if(search == null) {
+//			int pageNum = 1;
+//			if(page != null) {
+//				if(!page.isEmpty() && page.matches("\\d+")) {
+//					pageNum = Integer.parseInt(page);
+//				}
+//			}
+//			datas = service.getPage(pageNum, count, sort);
+//			request.setAttribute("page", pageNum);
+//			request.setAttribute("pageList", service.getPageNumberList(count));
+//		} else {
+//			EmpsDTO data = service.getEmpId(search);
+//			if(data != null) {
+//				datas = new ArrayList<EmpsDTO>();
+//				datas.add(data);
+//			}
+//		}
+//		request.setAttribute("datas", datas);
+//		
+		String view = "/WEB-INF/jsp/emps/index.jsp";
 		request.getRequestDispatcher(view).forward(request, response);
 	}
 

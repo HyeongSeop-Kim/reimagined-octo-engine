@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.*, locs.model.LocsDTO" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>지역 조회 결과</title>
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/static/css/styles.css">
+	<script type="text/javascript" src="<%=request.getContextPath() %>/static/js/required.js"></script>
 </head>
 <body>
+	<%@ include file="/WEB-INF/jsp/module/navigation.jsp" %>
 	<h1>지역 조회 결과</h1>
 	<div>
 		<form action="./locs" method="get">
@@ -27,29 +33,18 @@
 			<th>StateProvince</th>
 			<th>CountryId</th>
 		</tr>
-		<% 
-			if(request.getAttribute("datas") != null) {
-				List<LocsDTO> datas = (List<LocsDTO>)request.getAttribute("datas");
-				for(LocsDTO data: datas) { 
-		%>
-			<tr>
-				<td><%=data.getLocationId()  %></td>
-				<td><%=data.getStreetAddress()  %></td>
-				<td><%=data.getPostalCode()  %></td>
-				<td><%=data.getCity()  %></td>
-				<td><%=data.getStateProvince()  %></td>
-				<td><%=data.getCountryId()  %></td>
-			</tr>
-		<% 
-				}
-			}   else {
-		%>
-			<tr>
-				<td colspan="4">검색 결과가 없습니다.</td>
-			</tr>
-		<%
-			}
-		%>
+		<c:if test="${not empty datas}">
+			<c:forEach items="${datas}" var="data">
+				<tr>
+					<td>${data.locationId}</td>
+					<td>${data.streetAddress}</td>
+					<td>${data.postalCode}</td>
+					<td>${data.city}</td>
+					<td>${data.stateProvince}</td>
+					<td>${data.countryId}</td>
+				</tr>
+			</c:forEach>
+		</c:if>
 	</table>
 </body>
 </html>

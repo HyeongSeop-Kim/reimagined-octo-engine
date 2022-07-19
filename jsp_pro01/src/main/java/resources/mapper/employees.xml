@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="empsMapper">
+	<select id="selectAll" resultType="empsDto">
+		SELECT EMPLOYEE_ID AS empId
+			 , FIRST_NAME || ' ' || LAST_NAME AS empName
+			 , EMAIL || '@emp.com' AS email 
+			 , J.JOB_TITLE AS jobName
+			 , D.DEPARTMENT_NAME AS deptName
+		  FROM EMPLOYEES E
+		  JOIN JOBS J
+		    ON E.JOB_ID = J.JOB_ID
+		  JOIN DEPARTMENTS D 
+		    ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+	</select>
+	<select id="selectEmpDetail" parameterType="_int" resultType="empsDetailDto">
+		SELECT EMPLOYEE_ID AS empId
+			 , HIRE_DATE AS hireDate
+			 , PHONE_NUMBER AS phone
+			 , SALARY AS salary
+			 , COMMISSION_PCT AS commission
+		  FROM EMPLOYEES
+		 WHERE EMPLOYEE_ID = #{id}
+	</select>
+	
+	<select id="selectPage" parameterType="map" resultType="empsDto">
+		SELECT *
+		  FROM (SELECT ROWNUM AS RN
+		             , empId
+		             , empName
+		             , email
+		             , jobName
+		             , deptName
+		          FROM (SELECT EMPLOYEE_ID AS empId
+							 , FIRST_NAME || ' ' || LAST_NAME AS empName
+							 , EMAIL || '@emp.com' AS email 
+							 , J.JOB_TITLE AS jobName
+							 , D.DEPARTMENT_NAME AS deptName
+						  FROM EMPLOYEES E
+						  JOIN JOBS J
+						    ON E.JOB_ID = J.JOB_ID
+						  JOIN DEPARTMENTS D 
+						    ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+				          <choose>
+				              <when test="sort == 1">
+				                  ORDER BY empId DESC
+				              </when>
+				              <when test="sort == 2">
+				                  ORDER BY empName DESC
+				              </when>
+				              <when test="sort == 3">
+				                  ORDER BY email DESC
+				              </when>
+				              <when test="sort == 4">
+				                  ORDER BY jobName DESC
+				              </when>
+				              <when test="sort == 5">
+				                  ORDER BY deptName DESC
+				              </when>
+				          </choose>
+				       )
+		       )
+		 WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	<select id="rowCount" resultType="_int">
+		SELECT COUNT(*) FROM EMPLOYEES
+	</select>
+	<update id="updateEmp" parameterType="empsDto">
+		UPDATE EMPLOYEES
+		   SET EMAIL = SUBSTR(#{email}, 1, INSTR(#{email}, '@emp.com')-1)
+		 WHERE EMPLOYEE_ID = #{empId}
+	</update>
+	<update id="updateEmpDetail" parameterType="empsDetailDto">
+		UPDATE EMPLOYEES
+		   SET PHONE_NUMBER = #{phone}
+		 WHERE EMPLOYEE_ID = #{empId}
+	</update>
+</mapper>
+
