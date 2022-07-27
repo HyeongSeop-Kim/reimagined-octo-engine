@@ -177,6 +177,20 @@ public class DeptService {
 		}
 		return status;
 	}
+	
+	public boolean existsManager(String id) {
+		dao = new DeptDAO();
+		boolean result = _existManager(Integer.parseInt(id));
+		dao.close();
+		return result;
+	}
+	
+	public boolean existsLocation(String id) {
+		dao = new DeptDAO();
+		boolean result = _existLocation(Integer.parseInt(id));
+		dao.close();
+		return result;
+	}
 
 	private boolean _existDeptId(String id) {
 		boolean result = dao.existDeptId(id);
@@ -184,13 +198,11 @@ public class DeptService {
 	}
 
 	private boolean _existManager(int id) {
-		boolean result = dao.existManager(id);
-		return result;
+		return dao.existManager(id);
 	}
 	
 	private boolean _existLocation(int id) {
-		boolean result = dao.existLocation(id);
-		return result;
+		return dao.existLocation(id);
 	}
 	
 }

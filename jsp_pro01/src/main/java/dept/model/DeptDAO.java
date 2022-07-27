@@ -8,13 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.conn.db.DBConn;
 
-public class DeptDAO {
+import common.model.AbstractDAO;
 
-	private SqlSession session;
-	
-	public DeptDAO() {
-		session = DBConn.getSqlSession();
-	}
+public class DeptDAO extends AbstractDAO {
 	
 	public List<DeptDTO> searchAll() {
 		List<DeptDTO> datas = session.selectList("deptMapper.deptSelectAll");
@@ -109,19 +105,6 @@ public class DeptDAO {
 			return true;
 		}
 		return false;
-	}
-	
-	
-	public void commit() {
-		session.commit();
-	}
-	
-	public void rollback() {
-		session.rollback();
-	}
-	
-	public void close() {
-		session.close();
 	}
 
 }

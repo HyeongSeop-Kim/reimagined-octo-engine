@@ -8,8 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>내 정보</title>
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/styles.css">
-	<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/required.js"></script>
+	<%@ include file="../module/head.jsp" %>
 </head>
 <script type="text/javascript">
 window.onload = function() {
@@ -17,13 +16,31 @@ window.onload = function() {
 		imgSelect.click();
 	});
 	
-	imgSelect.addEventListener("change", showImagePreview);
+	imgSelect.addEventListener("change", ajaxImageUpload);
 }
 
 function showImagePreview(e) {
 	var file = e.target.files[0];
 	var imgUrl = URL.createObjectURL(file);
 	previewImg.src = imgUrl;
+}
+
+function ajaxImageUpload(e) {
+	var file = e.target.files[0];
+	var fData = new FormData();
+	fData.append("uploadImage", file, file.name);
+	
+	$.ajax({
+		type: "post",
+		enctype: "multipart/form-data",
+		url: "/jsp01/ajax/imageUpload",
+		data: fData,
+		processData: false,
+		contentType: false,
+		success: function(data, status) {
+			previewImg.src = data.src;
+		}
+	});
 }
 </script>
 <body>
@@ -97,5 +114,8 @@ function showImagePreview(e) {
 			</div>
 		</form>
 	</section>
+	<!--
+	<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/profile.js"></script>
+	 -->
 </body>
 </html>

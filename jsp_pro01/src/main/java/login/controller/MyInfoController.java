@@ -57,14 +57,17 @@ public class MyInfoController extends HttpServlet {
 		
 		Part imgFile = request.getPart("uploadImg");
 		String originName = imgFile.getSubmittedFileName();
+//		String imgName = imgFile.getSubmittedFileName();
+//		long imgSize = imgFile.getSize();
 		
-//		if(!originName.endsWith(".png")) {
-//			request.setAttribute("imageError", "이미지는 PNG 만 업로드 하세요.");
-//			doGet(request, response);
-//			return;
-//		}
-//		
-//		String location = request.getServletContext().getRealPath("/static/img/emp") + "/" + empsData.getEmpId() + ".png";
+		if(!originName.endsWith(".png")) {
+			request.setAttribute("imageError", "이미지는 PNG 파일만 업로드 가능합니다.");
+			doGet(request, response);
+			return;
+		}
+		
+		String location = request.getServletContext().getRealPath("/static/img/emp") + "/" + empsData.getEmpId() + ".png";
+
 		
 		empsData.setEmail(email);
 		
@@ -77,15 +80,16 @@ public class MyInfoController extends HttpServlet {
 		if(result) {
 			// 수정 성공
 			response.sendRedirect(request.getContextPath() + "/myinfo");
-//			if(!originName.isEmpty()) {
-//				imgFile.write(location);
-//			}
+			if(!originName.isEmpty()) {
+				imgFile.write(location);
+			}
 		} else {
 			// 수정 실패
 			request.setAttribute("error", "수정 작업 중 문제가 발생하였습니다.");
 			RequestDispatcher rd = request.getRequestDispatcher(view);
 			rd.forward(request, response);
 		}
+		
 	}
 
 }

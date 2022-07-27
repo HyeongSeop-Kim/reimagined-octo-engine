@@ -9,19 +9,78 @@
 <head>
 	<meta charset="UTF-8">
 	<title>부서 추가</title>
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/styles.css">
-	<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/required.js"></script>
+	<%@ include file="../module/head.jsp" %>
 </head>
+<script type="text/javascript">
+function dupCheck(value){
+	$.ajax({
+		type: "get",
+		url: "/jsp01/ajax/dupCheck",
+		data: {
+			deptId: value
+		},
+		dataType: "json",
+		success: function(data, status) {
+			var form = document.forms[0];
+			if(data.errCode === "duplicate") {
+				var label = document.createElement("label");
+				label.setAttribute("class", "input-label-error");
+				label.innerText = data.errMessage;
+				
+				if(form.deptId.nextElementSibling === null) {
+					form.deptId.after(label);
+				}
+			} else {
+				if(form.deptId.nextElementSibling !== null) {
+					form.deptId.nextElementSibling.remove();
+				}
+			}
+		}
+	});
+}
+function existsCheck(name, value){
+	$.ajax({
+		type: "get",
+		url: "/jsp01/ajax/existsCheck",
+		data: {
+			name: name,
+			value: value
+		},
+		dataType: "json",
+		success: function(data, status) {
+			var form = document.forms[0];
+			if(data.errCode === "notExists") {
+				if(form[name].nextElementSibling === null) {					
+					var label = document.createElement("label");
+					label.setAttribute("class", "input-label-error");
+					label.innerText = data.errMessage;
+					form[name].after(label);
+				} else {
+					form[name].nextElementSibling.setAttribute("class", "input-label-error");
+					form[name].nextElementSibling.innerText = data.errMessage;
+				}
+			} else if(data.errCode == "exists") {
+				if(form[name].nextElementSibling === null) {	
+					var label = document.createElement("label");
+					label.setAttribute("class", "input-label-ok");
+					label.innerText = data.errMessage;
+					form[name].after(label);
+				} else {
+					form[name].nextElementSibling.setAttribute("class", "input-label-ok");
+					form[name].nextElementSibling.innerText = data.errMessage;
+				}
+			}
+		}
+	});
+}
+</script>
 <body>
 	<h1>부서 추가 화면</h1>
 	<section class="container">
 		<form class="small-form" action="./add" method="post">
 			<div class="input-form wide">
 				<label class="input-label">부서ID</label>
-				<input class="input-text" type="text" name="deptId" value="${data.deptId}" placeholder="부서 ID">
-				<c:if test="${errorCode eq 'deptId'}">
-					<lavel class="input-label-error">${errorMsg}</lavel>
-				</c:if>
+				<input class="input-text" type="text" name="deptId" onchange="dupCheck(this.value);" value="${data.deptId}" placeholder="부서 ID">
 			</div>
 			<div class="input-form wide">
 				<label class="input-label">부서명</label>
@@ -29,17 +88,11 @@
 			</div>
 			<div class="input-form wide">
 				<label class="input-label">매니저ID</label>
-				<input class="input-text" type="text" name="mngId" value="${data.mngId}" placeholder="매니저 ID">
-				<c:if test="${errorCode eq 'mngId'}">
-					<lavel class="input-label-error">${errorMsg}</lavel>
-				</c:if>
+				<input class="input-text" type="text" name="mngId" onchange="existsCheck(this.name, this.value);" value="${data.mngId}" placeholder="매니저 ID">
 			</div>
 			<div class="input-form wide">
 				<label class="input-label">지역코드</label>
-				<input class="input-text" type="text" name="locId" value="${data.locId}" placeholder="지역 코드">
-				<c:if test="${errorCode eq 'locId'}">
-					<lavel class="input-label-error">${errorMsg}</lavel>
-				</c:if>
+				<input class="input-text" type="text" name="locId" onchange="existsCheck(this.name, this.value);" value="${data.locId}" placeholder="지역 코드">
 			</div>
 			<div class="input-form wide form-right">
 				<button class="btn btn-outline btn-ok" type="submit">저장</button>
