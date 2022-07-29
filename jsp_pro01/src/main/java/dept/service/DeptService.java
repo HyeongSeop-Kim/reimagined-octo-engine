@@ -12,7 +12,7 @@ public class DeptService {
 	
 	public List<DeptDTO> getAll() {
 		dao = new DeptDAO();
-		List<DeptDTO> datas = dao.searchAll();
+		List<DeptDTO> datas = dao.selectAll();
 		dao.close();
 		return datas;
 	}
@@ -94,7 +94,7 @@ public class DeptService {
 	
 	private DeptDTO _getDeptId(int id) {
 		dao = new DeptDAO();
-		DeptDTO data = dao.searchDeptId(id);
+		DeptDTO data = dao.selectId(id);
 		return data;
 	}
 
@@ -114,7 +114,7 @@ public class DeptService {
 		
 		switch(status) {
 			case SUCCESS :
-				if(dao.insertDept(data)) {
+				if(dao.insertData(data)) {
 					dao.commit();
 				} else {
 					status = DEPT_SERVICE_STATUS.FAILED;
@@ -141,7 +141,7 @@ public class DeptService {
 		
 		switch(status) {
 			case SUCCESS :
-				if(dao.updateDept(data)) {
+				if(dao.updateData(data)) {
 					dao.commit();
 				} else {
 					status = DEPT_SERVICE_STATUS.FAILED;
@@ -165,7 +165,7 @@ public class DeptService {
 		
 		switch(status) {
 			case SUCCESS:
-				if(dao.deleteDept(Integer.parseInt(id))) {
+				if(dao.deleteData(Integer.parseInt(id))) {
 					dao.commit();
 				} else {
 					status = DEPT_SERVICE_STATUS.FAILED;

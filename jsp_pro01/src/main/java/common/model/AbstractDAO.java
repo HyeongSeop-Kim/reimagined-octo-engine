@@ -6,10 +6,24 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.conn.db.DBConn;
 
-public abstract class AbstractDAO<E> {
+public abstract class AbstractDAO<C, E> {
 	protected SqlSession session = DBConn.getSqlSession();
 	
-	public abstract List<E> selectAll();
+	public abstract C selectAll();
+	
+	public abstract E selectId(int id);
+	
+	public abstract E selectId(E e);
+	
+	public abstract int rowCount();
+	
+	public abstract boolean insertData(E e);
+	
+	public abstract boolean updateData(E e);
+	
+	public abstract boolean deleteData(int id);
+	
+	public abstract boolean deleteData(E e);
 	
 	public void commit() {
 		session.commit();

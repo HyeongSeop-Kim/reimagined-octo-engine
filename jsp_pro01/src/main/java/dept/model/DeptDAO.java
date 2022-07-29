@@ -10,11 +10,71 @@ import com.conn.db.DBConn;
 
 import common.model.AbstractDAO;
 
-public class DeptDAO extends AbstractDAO {
+public class DeptDAO extends AbstractDAO<List<DeptDTO>, DeptDTO> {
 	
-	public List<DeptDTO> searchAll() {
+	@Override
+	public List<DeptDTO> selectAll() {		
 		List<DeptDTO> datas = session.selectList("deptMapper.deptSelectAll");
 		return datas;
+	}
+	
+	@Override
+	public DeptDTO selectId(int id) {
+		DeptDTO data = session.selectOne("deptMapper.deptSelectId", id);
+		return data;
+	}
+
+	@Override
+	public DeptDTO selectId(DeptDTO e) {
+		DeptDTO data = session.selectOne("deptMapper.deptSelectId", e.getDeptId());
+		return data;
+	}
+	
+	@Override
+	public int rowCount() {
+		int count = session.selectOne("deptMapper.deptRowCount");
+		return count;
+	}
+
+	@Override
+	public boolean insertData(DeptDTO data) {
+		int result = session.insert("deptMapper.deptInsert", data);
+		
+		if(result == 1) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateData(DeptDTO data) {
+		int result = session.update("deptMapper.deptUpdate", data);
+		
+		if(result == 1) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean deleteData(int id) {
+		int result = session.delete("deptMapper.deptDelete", id);
+		
+		if(result == 1) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteData(DeptDTO e) {
+		int result = session.delete("deptMapper.deptDelete", e.getDeptId());
+		
+		if(result == 1) {
+			return true;
+		}
+		return false;
 	}
 	
 	public List<DeptDTO> searchPage(int start, int end) {
@@ -45,35 +105,6 @@ public class DeptDAO extends AbstractDAO {
 		return datas;
 	}
 	
-	public int rowCount() {
-		int count = session.selectOne("deptMapper.deptRowCount");
-		return count;
-	}
-	
-	public DeptDTO searchDeptId(int id) {
-		DeptDTO data = session.selectOne("deptMapper.deptSelectId", id);
-		return data;
-	}
-
-	public boolean insertDept(DeptDTO data) {
-		int result = session.insert("deptMapper.deptInsert", data);
-		
-		if(result == 1) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean updateDept(DeptDTO data) {
-		int result = session.update("deptMapper.deptUpdate", data);
-		
-		if(result == 1) {
-			return true;
-		}
-		
-		return false;
-	}
-	
 	public boolean existManager(int id) {
 		int result = session.selectOne("deptMapper.existManager", id);
 		if(result == 1) {
@@ -92,15 +123,6 @@ public class DeptDAO extends AbstractDAO {
 
 	public boolean existDeptId(String id) {
 		int result = session.selectOne("deptMapper.existDeptId", id);
-		if(result == 1) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean deleteDept(int id) {
-		int result = session.delete("deptMapper.deptDelete", id);
-		
 		if(result == 1) {
 			return true;
 		}

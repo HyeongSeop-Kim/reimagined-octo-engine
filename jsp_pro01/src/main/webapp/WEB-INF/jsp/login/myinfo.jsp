@@ -101,7 +101,7 @@ function ajaxImageUpload(e) {
 				<div class="input-form">
 					<fmt:formatNumber var="fSalary" value="${empsDetailData.salary}" />
 					<label class="input-label w-100">급여액</label>
-					<input class="input-text w-auto" type="text" name="salery" value="${fSalary}" disabled>
+					<input class="input-text w-auto" type="text" name="salary" value="${fSalary}" disabled>
 				</div>
 				<div class="input-form">
 					<fmt:formatNumber var="fCommission" value="${empsDetailData.commission}" type="percent" />
