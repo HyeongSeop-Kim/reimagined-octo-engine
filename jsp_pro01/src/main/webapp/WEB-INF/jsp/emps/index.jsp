@@ -39,7 +39,6 @@
 				<col class="col-240">
 				<col class="col-240">
 				<col class="col-240">
-				<col class="col-120">
 			</colgroup>
 			<thead>
 				<tr>
@@ -58,26 +57,18 @@
 					<th class="${sort == 'deptName' ? 'sort-desc' : ''}"
 					onclick="location.href='./emps?page=${page}&sort=deptName'">부서
 					</th>
-					<th class="border-hidden-right"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:if test="${not empty datas}">
+					<c:url var="empDetailUrl" value= "/emps/detail" />
 					<c:forEach items="${datas}" var="data">
-						<tr>
+						<tr onclick="location.href='${empDetailUrl}?id=${data.empId}'">
 							<td>${data.empId}</td>
 							<td>${data.empName}</td>
 							<td>${data.email}</td>
 							<td>${data.jobName}</td>
 							<td>${data.deptName}</td>
-							<td class="border-hidden-right">
-								<button class="btn btn-icon" type="button" onclick="location.href='./emps/mod?id=${data.empId}'">
-									<span class="material-symbols-outlined">edit</span>
-								</button>
-								<button class="btn btn-icon" type="button" onclick="location.href='./emps/del?id=${data.empId}'">
-									<span class="material-symbols-outlined">delete</span>
-								</button>
-							</td>
 						</tr>
 					</c:forEach>
 				</c:if>

@@ -69,26 +69,26 @@ public class EmpsController extends HttpServlet {
 
 		response.addCookie(cookie);
 		*/
-//		List<EmpsDTO> datas = null;
-//		if(search == null) {
-//			int pageNum = 1;
-//			if(page != null) {
-//				if(!page.isEmpty() && page.matches("\\d+")) {
-//					pageNum = Integer.parseInt(page);
-//				}
-//			}
-//			datas = service.getPage(pageNum, count, sort);
-//			request.setAttribute("page", pageNum);
-//			request.setAttribute("pageList", service.getPageNumberList(count));
-//		} else {
-//			EmpsDTO data = service.getEmpId(search);
-//			if(data != null) {
-//				datas = new ArrayList<EmpsDTO>();
-//				datas.add(data);
-//			}
-//		}
-//		request.setAttribute("datas", datas);
-//		
+		List<EmpsDTO> datas = null;
+		if(search == null) {
+			int pageNum = 1;
+			if(page != null) {
+				if(!page.isEmpty() && page.matches("\\d+")) {
+					pageNum = Integer.parseInt(page);
+				}
+			}
+			datas = service.getPage(pageNum, count);
+			request.setAttribute("page", pageNum);
+			request.setAttribute("pageList", service.getPageNumberList(count));
+		} else {
+			EmpsDTO data = service.getId(search);
+			if(data != null) {
+				datas = new ArrayList<EmpsDTO>();
+				datas.add(data);
+			}
+		}
+		request.setAttribute("datas", datas);
+		
 		String view = "/WEB-INF/jsp/emps/index.jsp";
 		request.getRequestDispatcher(view).forward(request, response);
 	}
